@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.peddroccas.vacancy_management.exceptions.UserFoundException;
 import br.com.peddroccas.vacancy_management.modules.candidate.CandidateEntity;
 import br.com.peddroccas.vacancy_management.modules.candidate.CandidateRepository;
 import jakarta.validation.Valid;
@@ -19,6 +20,11 @@ public class CandidateController {
 
     @PostMapping("/")
     public CandidateEntity create(@Valid @RequestBody CandidateEntity candidate) {
+        this.candidateRepository
+                .findByUsernameOrEmail(candidate.getUsername(), candidate.getEmail())
+                .ifPresent((user) -> {
+                    throw new UserFoundException();
+                });
         return this.candidateRepository.save(candidate);
     }
 }
