@@ -1,6 +1,7 @@
 package br.com.peddroccas.vacancy_management.modules.company.useCases;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.peddroccas.vacancy_management.exceptions.UserFoundException;
@@ -9,6 +10,9 @@ import br.com.peddroccas.vacancy_management.modules.company.repositories.Company
 
 @Service
 public class CreateCompanyUseCase {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private CompanyRepository companyRepository;
@@ -20,7 +24,10 @@ public class CreateCompanyUseCase {
                 .ifPresent((user) -> {
                     throw new UserFoundException();
                 });
-        ;
+
+        var password = passwordEncoder.encode(companyEntity.getPassword());
+        companyEntity.setPassword((password));
+
         return this.companyRepository.save(companyEntity);
     }
 }
