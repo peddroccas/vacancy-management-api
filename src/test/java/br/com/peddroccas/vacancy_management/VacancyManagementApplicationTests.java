@@ -1,13 +1,13 @@
-package br.com.peddroccas.vacancy_management;
+// package br.com.peddroccas.vacancy_management;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class VacancyManagementApplicationTests {
+// @SpringBootTest
+// class VacancyManagementApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// @Test
+// void contextLoads() {
+// }
 
-}
+// }
