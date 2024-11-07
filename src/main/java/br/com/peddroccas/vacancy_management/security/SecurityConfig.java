@@ -13,6 +13,8 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class SecurityConfig {
 
     @Autowired
+    private SecurityCandidateFilter securityCandidateFilter;
+    @Autowired
     private SecurityFilter securityFilter;
 
     @Bean
@@ -20,11 +22,14 @@ public class SecurityConfig {
         http.csrf(csfr -> csfr.disable()).authorizeHttpRequests(auth -> {
             auth
                     .requestMatchers("/candidate/").permitAll()
+                    .requestMatchers("/candidate/auth").permitAll()
                     .requestMatchers("/company/").permitAll()
-                    .requestMatchers("/auth/*").permitAll();
+                    .requestMatchers("/company/auth").permitAll();
+
             auth.anyRequest().authenticated();
         })
-                .addFilterBefore(securityFilter, BasicAuthenticationFilter.class);
+                .addFilterBefore(securityFilter, BasicAuthenticationFilter.class)
+                .addFilterBefore(securityCandidateFilter, BasicAuthenticationFilter.class);
         return http.build();
     }
 
