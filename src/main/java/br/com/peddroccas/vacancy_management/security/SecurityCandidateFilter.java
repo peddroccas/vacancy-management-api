@@ -1,7 +1,6 @@
 package br.com.peddroccas.vacancy_management.security;
 
 import java.io.IOException;
-import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,7 +41,7 @@ public class SecurityCandidateFilter extends OncePerRequestFilter {
                 var roles = token.getClaim("roles").asList(Object.class);
 
                 var grants = roles.stream()
-                        .map(role -> new SimpleGrantedAuthority(role.toString()))
+                        .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toString().toUpperCase()))
                         .toList();
 
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(token.getSubject(),

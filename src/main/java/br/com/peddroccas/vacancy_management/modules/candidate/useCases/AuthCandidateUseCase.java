@@ -50,7 +50,7 @@ public class AuthCandidateUseCase {
                 .withExpiresAt(expiresIn)
                 .withIssuer("javagas")
                 .withSubject(candidate.getId().toString())
-                .withClaim("roles", Arrays.asList("candidate"))
+                .withClaim("roles", Arrays.asList("CANDIDATE"))
                 .sign(algorithm);
 
         var authCandidateResponseDTO = AuthCandidateResponseDTO.builder()
